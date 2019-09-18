@@ -1,4 +1,9 @@
 ﻿using Krooze.EntranceTest.WriteHere.Structure.Model;
+using System.Data;
+using System.IO;
+using System.Reflection;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Krooze.EntranceTest.WriteHere.Tests.LogicTests
 {
@@ -8,8 +13,11 @@ namespace Krooze.EntranceTest.WriteHere.Tests.LogicTests
         {
             //TODO: Take the Cruises.xml file, on the Resources folder, and translate it to the CruisesDTO object,
             //you can do it in any way, including intermediary objects
-              
-            return null;
+            XElement xmlFile = XElement.Load("Resources/Cruises.xml");
+            var serializer = new XmlSerializer(typeof(CruiseDTO));
+            
+            return (CruiseDTO)serializer.Deserialize(xmlFile.CreateReader());
         }
+
     }
 }
