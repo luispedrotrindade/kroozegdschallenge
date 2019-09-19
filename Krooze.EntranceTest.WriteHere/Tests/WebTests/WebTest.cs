@@ -28,24 +28,24 @@ namespace Krooze.EntranceTest.WriteHere.Tests.WebTests
 
             string director = "";
 
-            Dictionary<string, int> directors = new Dictionary<string, int>();
+            List<Director> directors = new List<Director>();
 
             directors.Add(json["results"][0]["director"].ToString(), 1);
 
             foreach (JToken value in json["results"])
             {
-                if (!directors.Keys.Any(x => x == value["director"].ToString()))
+                if (!directors.Any(x => x.Name == value["director"].ToString()))
                 {
-                    directors.Add(value["director"].ToString(), 1);
+                    directors.Add(new Director {Name=value["director"].ToString(), Count = 1});
                 }
                 else
                 {
-                    directors.FirstOrDefault(x => x.Key == value["director"].ToString()).value= directors.FirstOrDefault(x => x.Key == value["director"].ToString()).Value + 1;
+                    directors.FirstOrDefault(x => x.Name == value["director"].ToString()).Count++;
                 }
             }
 
 
-            return directors.Where(x => x.Value == directors.Values.Max()).First().Key;
+            return directors.Where(x => x.Count == directors.Max()).First().Name;
         }
 
 
@@ -80,4 +80,11 @@ namespace Krooze.EntranceTest.WriteHere.Tests.WebTests
 
         }
     }
+
+public class Director {
+public string Name {get; set;}
+public int Count {get;set;}
+
+}
+
 }
