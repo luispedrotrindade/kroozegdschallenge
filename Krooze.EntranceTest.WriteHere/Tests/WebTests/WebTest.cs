@@ -26,17 +26,15 @@ namespace Krooze.EntranceTest.WriteHere.Tests.WebTests
 
             JObject json = JObject.Parse(result);
 
-            string director = "";
-
             List<Director> directors = new List<Director>();
 
-            directors.Add(json["results"][0]["director"].ToString(), 1);
+            directors.Add(new Director { Name = json["results"][0]["director"].ToString(), Count = 1 });
 
             foreach (JToken value in json["results"])
             {
                 if (!directors.Any(x => x.Name == value["director"].ToString()))
                 {
-                    directors.Add(new Director {Name=value["director"].ToString(), Count = 1});
+                    directors.Add(new Director { Name = value["director"].ToString(), Count = 1 });
                 }
                 else
                 {
@@ -45,7 +43,7 @@ namespace Krooze.EntranceTest.WriteHere.Tests.WebTests
             }
 
 
-            return directors.Where(x => x.Count == directors.Max()).First().Name;
+            return directors.OrderByDescending(x=>x.Count).First().Name;
         }
 
 
@@ -81,10 +79,11 @@ namespace Krooze.EntranceTest.WriteHere.Tests.WebTests
         }
     }
 
-public class Director {
-public string Name {get; set;}
-public int Count {get;set;}
+    public class Director
+    {
+        public string Name { get; set; }
+        public int Count { get; set; }
 
-}
+    }
 
 }
