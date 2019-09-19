@@ -40,7 +40,7 @@ namespace Krooze.EntranceTest.WriteHere.Tests.WebTests
                 }
                 else
                 {
-                    directors.FirstOrDefault(x => x.Key == value["director"].ToString()).Value = directors.FirstOrDefault(x => x.Key == value["director"].ToString()).Value + 1;
+                    directors.FirstOrDefault(x => x.Key == value["director"].ToString()).value= directors.FirstOrDefault(x => x.Key == value["director"].ToString()).Value + 1;
                 }
             }
 
